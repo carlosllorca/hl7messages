@@ -1,5 +1,5 @@
 {
-    "name": "carlosllorca/hl7messasges",
+    "name": "carlosllorca/hl7messages",
     "description": "Hl7 Extension for Yii2 App",
     "type": "yii2-extension",
     "keywords": ["yii2","extension"],
