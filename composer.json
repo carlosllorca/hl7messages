@@ -10,7 +10,7 @@
             "email": "carlosllorca89@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": "*"
     },
