@@ -3,6 +3,8 @@
 namespace carlosllorca\hl7messages;
 use app\models\ContactForm;
 use app\models\LoginForm;
+use carlosllorca\hl7messages\Scenarios\OrderScenary;
+use carlosllorca\hl7messages\Scenarios\Test;
 use cllorca\hl7messages\Scenarios\Immunization;
 use cllorca\hl7messages\Scenarios\Vaccines;
 use cllorca\hl7messages\Segments\Nk1Segment;
@@ -24,6 +26,7 @@ class Hl7v2 extends \yii\base\Component
     public $filename='hl7v2file';
     public $sending_application='SPECIMENSECURE';
     public $sending_facility='';
+    public $scenary;
     public function init()
     {
         $this->_hl7Globals['SEGMENT_SEPARATOR'] = "\n";
@@ -43,6 +46,12 @@ class Hl7v2 extends \yii\base\Component
     public function getMessage(){
         return $this->message;
     }
+    public function setScenario($scenario){
+        $this->scenary=$scenario;
+    }
+    public function saveSegent($msg){
+        $this->message.=$msg;
+    }
     public function generateImmunizationHeader()
     {
         $msg=$this->initArray(15);//MSH tiene 15 espacios.
@@ -52,6 +61,20 @@ class Hl7v2 extends \yii\base\Component
         $msg[3]=$this->sending_facility;
         $msg[6]=date('Ymd');
         $msg[8]='VXU^V04^VXU_V04';
+        $msg[9]=\Yii::$app->security->generateRandomString();
+        $msg[10]='P';
+        $msg[11]='2.5';
+        $this->message.= implode($this->_hl7Globals['FIELD_SEPARATOR'], $msg)."\n";
+    }
+    public function generateOrderHeader()
+    {
+        $msg=$this->initArray(15);//MSH tiene 15 espacios.
+        $msg[0]='MSH';
+        $msg[1]=$this->_hl7Globals['SEGMENT_DEFINITION'];
+        $msg[2]=$this->sending_application;
+        $msg[3]=$this->sending_facility;
+        $msg[6]=date('Ymd');
+        $msg[8]='OML^021^OML_021';
         $msg[9]=\Yii::$app->security->generateRandomString();
         $msg[10]='P';
         $msg[11]='2.5';
@@ -217,6 +240,49 @@ class Hl7v2 extends \yii\base\Component
         unlink($file);
         return $immunizacion;
     }
+    public function importOrders($file){
+        $orders=[];
+        $fp = fopen($file, 'r');
+        $linea = fgets($fp);
+        $arr=$this->stringSplit($linea,$this->_hl7Globals['FIELD_SEPARATOR']);
+        if($arr[0]!='MSH'||$arr[8]!='OML^021^OML_021'){
+            throw new ErrorException('The File is not valid Orders Hl7v2 Message');
+        }
+        $order=null;
+        while(!feof($fp)) {
+
+            $linea = fgets($fp);
+            if($linea!=''){
+                $arr=$this->stringSplit($linea,$this->_hl7Globals['FIELD_SEPARATOR']);
+
+                if($arr[0]=='PID'){
+                    if($order){
+                        array_push($orders,$order);
+                    }
+                    $order=new OrderScenary();
+                    $order->pid->loadPidSegment($arr);
+
+                }elseif($arr[0]=='ORC'){
+                    if($order->temp_test->orc->orderControl){
+                        $order->saveTest();
+                    }
+                    $order->temp_test->orc->loadFromField($arr);
+
+                }elseif($arr[0]=='OBR'){
+                    $order->temp_test->obr->loadFormField($arr);
+                }elseif($arr[0]=='SPM'){
+                    $order->temp_test->spm->loadFormField($arr);
+                }else{
+                    echo json_encode($arr);
+                    throw new ErrorException('Unknown Segment '.$arr[0]);
+                }
+            }
+        }
+        fclose($fp);
+        if($order)
+            array_push($orders,$order);
+        return $orders;
+    }
     private function initArray($length){
         $result=[];
         for ($i=0;$i<$length;$i++){
@@ -291,6 +357,7 @@ class Hl7v2 extends \yii\base\Component
         $related->enteredBy=$arr[10];
         return $related;
     }
+
     private function loadRxaSegment($arr){
         $related=new RxaSegment();
         $related->subId=$arr[1];
