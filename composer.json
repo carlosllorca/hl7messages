@@ -20,6 +20,11 @@
             "carlosllorca\\Hl7Messages\\Scenarios\\": "scenarios/",
             "carlosllorca\\Hl7Messages\\Segments\\": "segments/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
     }
 
 }
