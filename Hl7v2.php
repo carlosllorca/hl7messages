@@ -18,6 +18,8 @@ use carlosllorca\hl7messages\Segments\PidSegment;
 /**
  * This is just an example.
  */
+
+
 class Hl7v2 extends \yii\base\Component
 {
     private $_hl7Globals = [];
