@@ -1,30 +1,25 @@
 {
-    "name": "carlosllorca/hl7messasges",
-    "description": "Hl7 Extension for Yii2 App",
-    "type": "yii2-extension",
-    "keywords": ["yii2","extension"],
-    "license": "GPL-2.0",
-    "authors": [
-        {
-            "name": "Carlos A. Llorca Santana",
-            "email": "carlosllorca89@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "yiisoft/yii2": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "carlosllorca\\hl7messages\\": "",
-            "carlosllorca\\hl7messages\\Scenarios\\": "scenarios/",
-            "carlosllorca\\hl7messages\\Segments\\": "segments/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.1.x-dev"
-        }
+  "name": "carlosllorca/hl7messasges",
+  "description": "Hl7 Extension for Yii2 App",
+  "type": "yii2-extension",
+  "keywords": ["yii2","extension"],
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "Carlos A. Llorca Santana",
+      "email": "carlosllorca89@gmail.com"
     }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "yiisoft/yii2": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "carlosllorca\\hl7messages\\": "",
+      "carlosllorca\\hl7messages\\Scenarios\\": "scenarios/",
+      "carlosllorca\\hl7messages\\Segments\\": "segments/"
+    }
+  }
 
 }
