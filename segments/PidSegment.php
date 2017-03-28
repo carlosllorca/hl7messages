@@ -66,26 +66,26 @@ class PidSegment extends BaseSegment
     
 
     public function generateBySpecimenSecurePatient($subject){
-
-        $subject->decrypt_sensitive_data();
-
-        $this->patientId=1;
+        $this->patientId=$subject->code;
         $this->patientName1=$subject->firts_name;
         $this->patientName2=$subject->last_name1;
         $this->date_birth=Date('Ymd',strtotime($subject->date_birth));
         $this->sex=$subject->gender->description;
-        $this->race=$subject->race->description;
+        //$this->race=$subject->race->description;
         $this->address=$subject->postal_adress;
         $this->address1=$subject->postal_adress_plus;
-        $this->city=$subject->zipcode->city->name;
-        $this->state=$subject->zipcode->city->state->name;
-        $this->country=$subject->zipcode->city->state->country->name;
-        $this->zipCode=$subject->zip_code;
-        $this->phone=$subject->zip_code;
-        $this->email=$subject->email;
+        if($subject->zip_code){
+            $this->city=$subject->zipcode->city->name;
+            $this->state=$subject->zipcode->city->state->name;
+            $this->country=$subject->zipcode->city->state->country->name;
+            $this->zipCode=$subject->zipcode->postalCode;
+        }
+        $this->phone=$subject->home_phone_number;
+
+        $this->email=$subject->email?$subject->email:'';
         $this->ss_number=$subject->social_security_number;
-        $this->ethnicGroup=$subject->ethnicOrigin->description;
-        $this->origin=$subject->origin0->name;        
+
+
             
     }
     public function loadFromAegishell($subject,$id){

@@ -7,6 +7,7 @@
  */
 namespace carlosllorca\hl7messages\Segments;
 use app\models\PatientRelationship;
+use ErrorException;
 
 /**
  * Class Nk1Segment

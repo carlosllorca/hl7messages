@@ -16,14 +16,14 @@
     },
     "autoload": {
         "psr-4": {
-            "carlosllorca\\Hl7Messages\\": "",
-            "carlosllorca\\Hl7Messages\\Scenarios\\": "scenarios/",
-            "carlosllorca\\Hl7Messages\\Segments\\": "segments/"
+            "carlosllorca\\hl7messages\\": "",
+            "carlosllorca\\hl7messages\\Scenarios\\": "scenarios/",
+            "carlosllorca\\hl7messages\\Segments\\": "segments/"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "2.1"
         }
     }
 
