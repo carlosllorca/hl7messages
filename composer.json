@@ -17,8 +17,26 @@
   "autoload": {
     "psr-4": {
       "carlosllorca\\hl7messages\\": "",
+
+      "carlosllorca\\hl7messages\\Encoders\\": "Encoders/",
+      "carlosllorca\\hl7messages\\Interfaces\\": "Interfaces/",
+      "carlosllorca\\hl7messages\\lib\\": "lib/",
+      "carlosllorca\\hl7messages\\test\\": "test/",
+      "carlosllorca\\hl7messages\\MessagesStructure\\": "MessagesStructure/",
       "carlosllorca\\hl7messages\\Scenarios\\": "scenarios/",
-      "carlosllorca\\hl7messages\\Segments\\": "segments/"
+      "carlosllorca\\hl7messages\\Segments\\": "segments/",
+
+      "Hl7v2": "lib",
+      "Hl7v2\\DataType": "lib/DataType",
+      "Hl7v2\\Encoding": "lib/Encoding",
+      "Hl7v2\\Exception": "lib/Exception",
+      "Hl7v2\\Factory": "lib/Factory",
+      "Hl7v2\\Message": "lib/Message",
+      "Hl7v2\\Segment": "lib/Segment",
+      "Hl7v2\\Test": "lib/Test"
+
+
+
     }
   }
 
